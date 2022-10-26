@@ -1,6 +1,11 @@
 # LPG3
 Repositório da Disciplina de Linguagem de Programação III do curso de Bacharelado em Ciência da Computação do IFC Videira
-![](print1.jpg)
-![](print2.jpg)
-![](print3.jpg)
-![](print4.jpg)
+
+
+![Camera](print1.jpg)
+
+![Splash Screen](print2.jpg)
+
+![Galeria](print3.jpg)
+
+![About](print4.jpg)
