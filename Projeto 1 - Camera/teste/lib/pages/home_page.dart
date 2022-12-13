@@ -1,11 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:teste/api.dart';
 import 'package:teste/pages/about_page.dart';
-class HomePage extends StatefulWidget {
+import "package:firebase_auth/firebase_auth.dart";
 
-  HomePage({Key? key,this.title}) : super(key: key);
+class Frase {
+
+  String frase;
+  Frase(this.frase);
+
+  Frase.fromJson(Map json): frase = json['show']['value'];
+}
+class HomePage extends StatefulWidget {
+ 
+  HomePage({Key? key,this.title, }) : super(key: key);
 
   final String? title;
 
@@ -13,42 +25,29 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-// Future<String> getFilePath() async {
-//     Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
-//     String appDocumentsPath = appDocumentsDirectory.path; // 2
-//     String filePath = '$appDocumentsPath/demoTextFile.txt'; // 3
-//     print('sla poh: $filePath');
-
-//     return filePath;
-//   }
-
-//    void saveFile() async {
-//     File file = File(await getFilePath()); // 1
-//     file.writeAsString("This is my demo text that will be saved to : demoTextFile.txt"); // 2
-//     debugPrint('File Content: $file');
-//     debugPrint("oi=====================================================================");
-//   }
-
-//   void readFile() async {
-//     File file = File(await getFilePath()); // 1
-//     String fileContent = await file.readAsString(); // 2
-// }
-
 class _HomePageState extends State<HomePage> {
   final photos = <File>[];
-  void openCamera() {
-    // debugPrint('File Content: $fileContent');
-    // print("oi====================================+++++++=================================");
-    // saveFile();
+  String frase="";
+    _HomePageState(){
+    Api.getFrase().then((value){
+      setState((){
+        frase = jsonDecode(value.body)['value'];
+    });
+      });
+  }
+
+   void openCamera() {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => CameraCamera(
                   onFile: (file) {
+                    
                     GallerySaver.saveImage(file.path);
-
                     photos.add(file);
+                    
                     Navigator.pop(context);
+                    // setData(file.path);
                     setState(() {});
                   },
                 )));
@@ -63,20 +62,23 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.green,
         title: Text(widget.title ?? "Câmera"),
         
-        // leading: IconButton(icon: const Icon(Icons.menu),
-      //   onPressed: () {
-      //   },
-      // ),
+        leading: IconButton(icon: const Icon(Icons.logout),
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+        },
+      ),
         actions: <Widget>[
           TextButton(
-            onPressed: () {        
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const About()));
+            onPressed: () {   
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => About(frase: frase,)));
             },
           child: const Text('About', style: TextStyle(color: Colors.white),),
           ),
         ],
       ),
-      body: GridView.builder(
+    
+     body: GridView.builder(
         gridDelegate:
            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: photos.length,
@@ -91,6 +93,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
+      
       floatingActionButton: FloatingActionButton(
         onPressed: openCamera,
         child: const Icon(Icons.camera_alt),
@@ -98,52 +102,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
-
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   late TextEditingController _controller;
-//   String n="";
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = TextEditingController();
-//   }
-
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Color.fromARGB(255, 14, 77, 33),
-//         title: const Text('Teste',
-//         ),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//           TextField(
-//               controller: _controller,
-//               onSubmitted: (String nome) async {
-//                 n = nome;
-//                 setState(() {});
-//               },
-//             ),
-//             Text("Olá $n"),
-//           ],
-//         ),
-//       ),
-//     );
-  // }
-// }
-

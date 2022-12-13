@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "637035579190",
+    "project_id": "projeto-camera-flutter",
+    "storage_bucket": "projeto-camera-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637035579190:android:0ea8e9520756056ccad597",
+        "android_client_info": {
+          "package_name": "com.example.teste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637035579190-vprl9hip8lhpmr9hnnrtqqdnv1c8uai0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVOYXYVF0sXS8BP_REEHmYHgWjgc_9qA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637035579190-vprl9hip8lhpmr9hnnrtqqdnv1c8uai0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

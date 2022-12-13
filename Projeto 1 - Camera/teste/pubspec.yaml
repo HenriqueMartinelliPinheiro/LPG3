@@ -34,7 +34,9 @@ dependencies:
   flutter_native_splash: ^2.2.9
   camera_camera: ^2.0.2
   gallery_saver: ^2.3.2
-
+  firebase_auth: ^4.1.4
+  http: ^0.13.5
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
